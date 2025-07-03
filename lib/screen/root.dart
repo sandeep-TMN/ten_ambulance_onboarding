@@ -4,7 +4,6 @@ import 'package:ten_ambulance_onboarding/components/animations.dart';
 import 'package:ten_ambulance_onboarding/controllers/screen_state_controller.dart';
 import 'package:ten_ambulance_onboarding/layouts/main_layout.dart';
 import 'package:ten_ambulance_onboarding/utils/app_storage.dart';
-import 'package:ten_ambulance_onboarding/utils/colors.dart';
 import 'package:ten_ambulance_onboarding/utils/navigation.dart';
 
 class RootScreen extends StatefulWidget {
@@ -30,36 +29,46 @@ class _RootScreen extends State<RootScreen> {
   Widget build(BuildContext context) {
     final currentRoute = Get.currentRoute;
     final currentScreen = screenFromRoute(currentRoute);
-    checkLogin();
+    // checkLogin();
 
     return mainLayout(
       context: context,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 30),
+          SizedBox(height: 60),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 60,
+                child: Image.asset('assets/images/logo_ten.png'),
+              ),
+              SizedBox(width: 10),
+              Container(
+                padding: EdgeInsets.only(top: 10),
+                child: SizedBox(
+                  height: 36,
+                  child: Image.asset('assets/images/logo_ten_name.png'),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 60),
           Text(
-            'Welcome User',
+            'Welcome to TEN - Total Emergency Network',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: AppColors.primary,
-              fontSize: 24,
+              fontSize: 14,
               fontFamily: 'FunnelSans',
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w400,
+              color: Color.fromARGB(255, 176, 89, 17),
             ),
           ),
           SizedBox(height: 8),
-          Text(
-            'TEN - Total Emergency network',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: 'FunnelSans',
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          SizedBox(height: 80),
           ambulanceWaiting(),
           SizedBox(width: double.infinity, height: 36, child: loading()),
+          SizedBox(height: 30),
         ],
       ),
       screen: currentScreen,
