@@ -50,8 +50,8 @@ Future<Map<String, String?>> getUserData() async {
 }
 
 Future<bool> isLoggedIn() async {
-  await Future.delayed(Duration(milliseconds: 500));
-  return true;
+  await Future.delayed(Duration(milliseconds: 5000));
+  return false;
 }
 
 Future<void> logout() async {
