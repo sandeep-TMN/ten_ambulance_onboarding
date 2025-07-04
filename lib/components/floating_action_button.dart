@@ -77,17 +77,5 @@ Widget? floatingActionButton({
       child: const Icon(Iconsax.user_octagon_outline),
     );
   }
-  if (Screen.register == screen) {
-    return FloatingActionButton(
-      onPressed: () {
-        FocusScope.of(context).unfocus();
-        screenStateController.goTo(screen: Screen.login, replace: true);
-      },
-      backgroundColor: Color(0xfff25a2a),
-      foregroundColor: Colors.white,
-      tooltip: 'navigate',
-      child: const Icon(Iconsax.login_outline),
-    );
-  }
   return null;
 }

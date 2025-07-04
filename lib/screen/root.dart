@@ -33,43 +33,49 @@ class _RootScreen extends State<RootScreen> {
 
     return mainLayout(
       context: context,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 60),
-          Row(
+      child: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 60,
-                child: Image.asset('assets/images/logo_ten.png'),
+              SizedBox(height: 60),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 60,
+                    child: Image.asset('assets/images/logo_ten.png'),
+                  ),
+                  SizedBox(width: 10),
+                  Container(
+                    padding: EdgeInsets.only(top: 10),
+                    child: SizedBox(
+                      height: 36,
+                      child: Image.asset('assets/images/logo_ten_name.png'),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: 10),
-              Container(
-                padding: EdgeInsets.only(top: 10),
-                child: SizedBox(
-                  height: 36,
-                  child: Image.asset('assets/images/logo_ten_name.png'),
+              SizedBox(height: 60),
+              Text(
+                'Welcome to TEN - Total Emergency Network',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'FunnelSans',
+                  fontWeight: FontWeight.w400,
+                  color: Color.fromARGB(255, 176, 89, 17),
                 ),
               ),
+              SizedBox(height: 8),
+              ambulanceWaiting(),
+              SizedBox(width: double.infinity, height: 36, child: loading()),
+              SizedBox(height: 30),
             ],
           ),
-          SizedBox(height: 60),
-          Text(
-            'Welcome to TEN - Total Emergency Network',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14,
-              fontFamily: 'FunnelSans',
-              fontWeight: FontWeight.w400,
-              color: Color.fromARGB(255, 176, 89, 17),
-            ),
-          ),
-          SizedBox(height: 8),
-          ambulanceWaiting(),
-          SizedBox(width: double.infinity, height: 36, child: loading()),
-          SizedBox(height: 30),
-        ],
+        ),
       ),
       screen: currentScreen,
     );

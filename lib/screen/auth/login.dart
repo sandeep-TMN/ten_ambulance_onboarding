@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:ten_ambulance_onboarding/components/animations.dart';
 import 'package:ten_ambulance_onboarding/components/ui/text_input.dart';
 import 'package:ten_ambulance_onboarding/layouts/main_layout.dart';
 import 'package:ten_ambulance_onboarding/utils/colors.dart';
@@ -17,7 +18,8 @@ class _LoginScreen extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _handler = TextEditingController();
   final _password = TextEditingController();
-  var isChecked = false;
+  var _checked = false;
+  var _loading = false;
 
   @override
   void dispose() {
@@ -27,10 +29,17 @@ class _LoginScreen extends State<LoginScreen> {
   }
 
   void _submit() {
+    FocusScope.of(context).unfocus();
+    if (_loading) {
+      return;
+    }
     if (_formKey.currentState!.validate()) {
       // Form is valid, proceed
       print('Email: ${_handler.text}');
       print('Password: ${_password.text}');
+      setState(() {
+        _loading = true;
+      });
     }
   }
 
@@ -68,7 +77,7 @@ class _LoginScreen extends State<LoginScreen> {
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 width: double.infinity,
                 child: Text(
-                  'Welcome Back,',
+                  'Welcome to TEN,',
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 20,
@@ -94,7 +103,7 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
                 child: AppTextInput(
                   controller: _handler,
-                  hintText: 'Email or username',
+                  hintText: 'Email',
                   prefixIcon: Iconsax.user_octagon_outline,
                 ),
               ),
@@ -121,10 +130,10 @@ class _LoginScreen extends State<LoginScreen> {
                     Row(
                       children: [
                         Checkbox(
-                          value: isChecked,
+                          value: _checked,
                           onChanged: (bool? value) {
                             setState(() {
-                              isChecked = !isChecked;
+                              _checked = !_checked;
                             });
                           },
                           activeColor: AppColors.primary,
@@ -162,11 +171,17 @@ class _LoginScreen extends State<LoginScreen> {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Login"),
-                      SizedBox(width: 5),
-                      Icon(Iconsax.login_outline, size: 22),
-                    ],
+                    children: _loading
+                        ? [
+                            Text("Authenticating..."),
+                            SizedBox(width: 15),
+                            loadingSpinner(size: 15),
+                          ]
+                        : [
+                            Text("Login"),
+                            SizedBox(width: 5),
+                            Icon(Iconsax.login_outline, size: 22),
+                          ],
                   ),
                 ),
               ),

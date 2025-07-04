@@ -1,10 +1,14 @@
 enum Screen {
-  root("/root"),
-  home("/home"),
-  login("/login"),
-  loginPhoneNo("/login_phone_no"),
-  register("/register"),
-  counter("/counter"),
+  root('/root'),
+
+  login('/login'),
+  loginPhoneNo('/login_phone_no'),
+  otpValidation('/otp_validation'),
+  register('/register'),
+
+  home('/home'),
+  counter('/counter'),
+
   unknown('');
 
   final String name;
@@ -12,8 +16,9 @@ enum Screen {
 }
 
 Screen screenFromRoute(String route) {
+  final path = route.split('?').first;
   return Screen.values.firstWhere(
-    (screen) => screen.name == route,
+    (screen) => screen.name == path,
     orElse: () => Screen.unknown,
   );
 }

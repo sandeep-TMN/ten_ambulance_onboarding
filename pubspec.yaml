@@ -38,6 +38,9 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   lottie: ^3.3.1
   icons_plus: ^5.0.0
+  dio: ^5.8.0+1
+  logger: ^2.6.0
+  pin_code_fields: ^8.0.1
 
 dev_dependencies:
   flutter_test:

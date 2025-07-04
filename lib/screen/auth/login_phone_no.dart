@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:ten_ambulance_onboarding/api/services/user_api.dart';
+import 'package:ten_ambulance_onboarding/components/animations.dart';
 import 'package:ten_ambulance_onboarding/components/ui/text_input.dart';
+import 'package:ten_ambulance_onboarding/controllers/screen_state_controller.dart';
 import 'package:ten_ambulance_onboarding/layouts/main_layout.dart';
+import 'package:ten_ambulance_onboarding/utils/app_logger.dart';
 import 'package:ten_ambulance_onboarding/utils/colors.dart';
 import 'package:ten_ambulance_onboarding/utils/navigation.dart';
 
@@ -17,7 +21,10 @@ class PhoneNoLoginScreen extends StatefulWidget {
 class _PhoneNoLoginScreen extends State<PhoneNoLoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _phoneNo = TextEditingController();
-  var isChecked = false;
+  final userApi = UserApi();
+  final ScreenStateController screenStateController = Get.find();
+
+  var _loading = false;
 
   @override
   void dispose() {
@@ -25,10 +32,39 @@ class _PhoneNoLoginScreen extends State<PhoneNoLoginScreen> {
     super.dispose();
   }
 
+  void _gotToOtpValidation(String phoneNo) {
+    screenStateController.goTo(
+      screen: Screen.otpValidation,
+      params: {'phoneNo': phoneNo, 'countryCode': '+91'},
+    );
+  }
+
   void _submit() {
+    FocusScope.of(context).unfocus();
+    if (_loading) {
+      return;
+    }
     if (_formKey.currentState!.validate()) {
-      // Form is valid, proceed
-      print('Phone: ${_phoneNo.text}');
+      if (_phoneNo.text.length == 10) {
+        setState(() {
+          _loading = true;
+        });
+        _gotToOtpValidation(_phoneNo.text);
+        setState(() {
+          _loading = false;
+        });
+        // try {
+        //   userApi.sendOtp(phoneNo: _phoneNo.text);
+        // } on Exception catch (e) {
+        //   logger.e(e);
+        // } finally {
+        //   setState(() {
+        //     _loading = false;
+        //   });
+        // }
+      } else {
+        logger.i("invalid number");
+      }
     }
   }
 
@@ -67,7 +103,7 @@ class _PhoneNoLoginScreen extends State<PhoneNoLoginScreen> {
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 width: double.infinity,
                 child: Text(
-                  'Welcome Back,',
+                  'Welcome to TEN,',
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 20,
@@ -125,11 +161,17 @@ class _PhoneNoLoginScreen extends State<PhoneNoLoginScreen> {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Generate OTP"),
-                      SizedBox(width: 10),
-                      Icon(Iconsax.message_2_outline, size: 22),
-                    ],
+                    children: _loading
+                        ? [
+                            Text("Sending otp ..."),
+                            SizedBox(width: 15),
+                            loadingSpinner(size: 15),
+                          ]
+                        : [
+                            Text("Generate OTP"),
+                            SizedBox(width: 10),
+                            Icon(Iconsax.message_2_outline, size: 22),
+                          ],
                   ),
                 ),
               ),

@@ -4,6 +4,7 @@ import 'package:ten_ambulance_onboarding/controllers/screen_state_controller.dar
 import 'package:ten_ambulance_onboarding/screen/auth/login.dart';
 import 'package:ten_ambulance_onboarding/screen/auth/login_phone_no.dart';
 import 'package:ten_ambulance_onboarding/screen/auth/register.dart';
+import 'package:ten_ambulance_onboarding/screen/auth/otp_validation.dart';
 import 'package:ten_ambulance_onboarding/screen/counter.dart';
 import 'package:ten_ambulance_onboarding/screen/home.dart';
 import 'package:ten_ambulance_onboarding/screen/root.dart';
@@ -38,6 +39,11 @@ class _ApplicationState extends State<Application> {
           name: Screen.loginPhoneNo.name,
           page: () => PhoneNoLoginScreen(),
         ),
+        GetPage(
+          name: Screen.otpValidation.name,
+          page: () => OtpValidationScreen(),
+        ),
+
         GetPage(name: Screen.register.name, page: () => RegisterScreen()),
         GetPage(name: Screen.counter.name, page: () => Counter()),
       ],
