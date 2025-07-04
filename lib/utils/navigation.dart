@@ -2,6 +2,7 @@ enum Screen {
   root("/root"),
   home("/home"),
   login("/login"),
+  loginPhoneNo("/login_phone_no"),
   register("/register"),
   counter("/counter"),
   unknown('');

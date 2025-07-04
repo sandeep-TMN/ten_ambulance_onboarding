@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:ten_ambulance_onboarding/components/ui/text_input.dart';
@@ -6,31 +7,28 @@ import 'package:ten_ambulance_onboarding/layouts/main_layout.dart';
 import 'package:ten_ambulance_onboarding/utils/colors.dart';
 import 'package:ten_ambulance_onboarding/utils/navigation.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class PhoneNoLoginScreen extends StatefulWidget {
+  const PhoneNoLoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreen();
+  State<PhoneNoLoginScreen> createState() => _PhoneNoLoginScreen();
 }
 
-class _LoginScreen extends State<LoginScreen> {
+class _PhoneNoLoginScreen extends State<PhoneNoLoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _handler = TextEditingController();
-  final _password = TextEditingController();
+  final _phoneNo = TextEditingController();
   var isChecked = false;
 
   @override
   void dispose() {
-    _handler.dispose();
-    _password.dispose();
+    _phoneNo.dispose();
     super.dispose();
   }
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
       // Form is valid, proceed
-      print('Email: ${_handler.text}');
-      print('Password: ${_password.text}');
+      print('Phone: ${_phoneNo.text}');
     }
   }
 
@@ -45,11 +43,12 @@ class _LoginScreen extends State<LoginScreen> {
     return mainLayout(
       context: context,
       child: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.18),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.22),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 width: double.infinity,
@@ -86,60 +85,24 @@ class _LoginScreen extends State<LoginScreen> {
                   style: TextStyle(fontSize: 14),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 50),
               Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: horizontalPadding,
                   vertical: verticalPadding,
                 ),
                 child: AppTextInput(
-                  controller: _handler,
-                  hintText: 'Email or username',
-                  prefixIcon: Iconsax.user_octagon_outline,
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: horizontalPadding,
-                  vertical: verticalPadding,
-                ),
-                child: AppTextInput(
-                  controller: _password,
-                  hintText: 'Password',
-                  prefixIcon: Iconsax.lock_circle_outline,
-                  protected: true,
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: horizontalPadding,
-                  vertical: verticalPadding,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: isChecked,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              isChecked = !isChecked;
-                            });
-                          },
-                          activeColor: AppColors.primary,
-                        ),
-                        Text('Remember Me'),
-                      ],
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(right: 10),
-                      child: Text('Forgot Password?'),
-                    ),
+                  controller: _phoneNo,
+                  hintText: '  Enter Phone Number',
+                  prefixIcon: Iconsax.call_outline,
+                  textInputType: TextInputType.phone,
+                  textInputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(10),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: horizontalPadding,
@@ -163,9 +126,9 @@ class _LoginScreen extends State<LoginScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Login"),
-                      SizedBox(width: 5),
-                      Icon(Iconsax.login_outline, size: 22),
+                      Text("Generate OTP"),
+                      SizedBox(width: 10),
+                      Icon(Iconsax.message_2_outline, size: 22),
                     ],
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:ten_ambulance_onboarding/controllers/counter_controller.dart';
 import 'package:ten_ambulance_onboarding/controllers/screen_state_controller.dart';
 import 'package:ten_ambulance_onboarding/utils/navigation.dart';
@@ -18,6 +19,7 @@ Widget? floatingActionButton({
         FloatingActionButton(
           heroTag: 'navigator',
           onPressed: () {
+            FocusScope.of(context).unfocus();
             screenStateController.goTo(screen: Screen.home);
           },
           backgroundColor: Color(0xfff25a2a),
@@ -42,6 +44,7 @@ Widget? floatingActionButton({
   if (Screen.home == screen) {
     return FloatingActionButton(
       onPressed: () {
+        FocusScope.of(context).unfocus();
         screenStateController.goTo(screen: Screen.counter);
       },
       backgroundColor: Color(0xfff25a2a),
@@ -53,12 +56,37 @@ Widget? floatingActionButton({
   if (Screen.login == screen) {
     return FloatingActionButton(
       onPressed: () {
-        screenStateController.goTo(screen: Screen.home);
+        FocusScope.of(context).unfocus();
+        screenStateController.goTo(screen: Screen.loginPhoneNo, replace: true);
       },
       backgroundColor: Color(0xfff25a2a),
       foregroundColor: Colors.white,
       tooltip: 'navigate',
-      child: const Icon(Icons.nat_sharp),
+      child: const Icon(Iconsax.message_2_outline),
+    );
+  }
+  if (Screen.loginPhoneNo == screen) {
+    return FloatingActionButton(
+      onPressed: () {
+        FocusScope.of(context).unfocus();
+        screenStateController.goTo(screen: Screen.login, replace: true);
+      },
+      backgroundColor: Color(0xfff25a2a),
+      foregroundColor: Colors.white,
+      tooltip: 'navigate',
+      child: const Icon(Iconsax.user_octagon_outline),
+    );
+  }
+  if (Screen.register == screen) {
+    return FloatingActionButton(
+      onPressed: () {
+        FocusScope.of(context).unfocus();
+        screenStateController.goTo(screen: Screen.login, replace: true);
+      },
+      backgroundColor: Color(0xfff25a2a),
+      foregroundColor: Colors.white,
+      tooltip: 'navigate',
+      child: const Icon(Iconsax.login_outline),
     );
   }
   return null;

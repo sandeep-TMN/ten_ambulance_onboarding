@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ten_ambulance_onboarding/controllers/screen_state_controller.dart';
 import 'package:ten_ambulance_onboarding/screen/auth/login.dart';
+import 'package:ten_ambulance_onboarding/screen/auth/login_phone_no.dart';
 import 'package:ten_ambulance_onboarding/screen/auth/register.dart';
 import 'package:ten_ambulance_onboarding/screen/counter.dart';
 import 'package:ten_ambulance_onboarding/screen/home.dart';
@@ -33,6 +34,10 @@ class _ApplicationState extends State<Application> {
         GetPage(name: Screen.root.name, page: () => RootScreen()),
         GetPage(name: Screen.home.name, page: () => HomeScreen()),
         GetPage(name: Screen.login.name, page: () => LoginScreen()),
+        GetPage(
+          name: Screen.loginPhoneNo.name,
+          page: () => PhoneNoLoginScreen(),
+        ),
         GetPage(name: Screen.register.name, page: () => RegisterScreen()),
         GetPage(name: Screen.counter.name, page: () => Counter()),
       ],

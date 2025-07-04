@@ -29,7 +29,7 @@ class _RootScreen extends State<RootScreen> {
   Widget build(BuildContext context) {
     final currentRoute = Get.currentRoute;
     final currentScreen = screenFromRoute(currentRoute);
-    // checkLogin();
+    checkLogin();
 
     return mainLayout(
       context: context,
